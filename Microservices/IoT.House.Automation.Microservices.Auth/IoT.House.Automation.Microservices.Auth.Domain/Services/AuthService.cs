@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using IoT.House.Automation.Microservices.Auth.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Auth.Domain.Models;
@@ -10,11 +11,13 @@ namespace IoT.House.Automation.Microservices.Auth.Domain.Services
     {
         private readonly IJwt _jwtService;
         private readonly IAuthRepository _authRepository;
+        private readonly IMap _mapper;
 
-        public AuthService(IJwt jwtService, IAuthRepository authRepository)
+        public AuthService(IJwt jwtService, IAuthRepository authRepository, IMap mapper)
         {
             _jwtService = jwtService;
             _authRepository = authRepository;
+            _mapper = mapper;
         }
 
         public string Signin(Login login)
@@ -36,8 +39,9 @@ namespace IoT.House.Automation.Microservices.Auth.Domain.Services
 
             const string username = "Implement jwt username retriever";
             var rs = _authRepository.GetUserInformation(username);
-
-            return new User();
+            var user = _mapper.Map<User>(rs.Tables[0]).FirstOrDefault();
+            
+            return user;
         }
     }
 }
