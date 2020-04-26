@@ -8,6 +8,7 @@ namespace IoT.House.Automation.Microservices.Auth.Domain.Interfaces
     public interface IJwt
     {
         string CreateToken(string username);
+        string GetClaimValue(string token);
         bool IsTokenValid(string token);
     }
 }

@@ -37,7 +37,7 @@ namespace IoT.House.Automation.Microservices.Auth.Domain.Services
 
             if (!isValid) return null;
 
-            const string username = "Implement jwt username retriever";
+            var username = _jwtService.GetClaimValue(token);
             var rs = _authRepository.GetUserInformation(username);
             var user = _mapper.Map<User>(rs.Tables[0]).FirstOrDefault();
             
