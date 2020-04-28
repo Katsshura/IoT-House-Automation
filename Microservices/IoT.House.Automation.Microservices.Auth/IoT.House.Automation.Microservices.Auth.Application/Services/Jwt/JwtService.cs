@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using IoT.House.Automation.Microservices.Auth.Application.Entities.Config;
+﻿using IoT.House.Automation.Microservices.Auth.Application.Entities.Config;
 using IoT.House.Automation.Microservices.Auth.Domain.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace IoT.House.Automation.Microservices.Auth.Application.Services.Jwt
 {
@@ -48,7 +46,7 @@ namespace IoT.House.Automation.Microservices.Auth.Application.Services.Jwt
 
         private SecurityTokenDescriptor GetDescriptor(string username, SymmetricSecurityKey securityKey)
         {
-            return new SecurityTokenDescriptor()
+            return new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(
                     new[] { new Claim(ClaimTypes.Name, username) }),
@@ -71,7 +69,7 @@ namespace IoT.House.Automation.Microservices.Auth.Application.Services.Jwt
 
         private TokenValidationParameters GetTokenParameters(byte[] key)
         {
-            return new TokenValidationParameters()
+            return new TokenValidationParameters
             {
                 RequireExpirationTime = true,
                 ValidateIssuer = false,
