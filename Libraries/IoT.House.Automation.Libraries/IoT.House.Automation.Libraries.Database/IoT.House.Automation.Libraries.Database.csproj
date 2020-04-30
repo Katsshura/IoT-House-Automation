@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Katsshura</Authors>
+    <Product>IoT.House.Automation</Product>
+    <Description>Database Library created for IoT.House.Automation project.
+
+Full Project Avaliable on github</Description>
+    <PackageProjectUrl>https://github.com/Katsshura/IoT-House-Automation</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Katsshura/IoT-House-Automation</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
