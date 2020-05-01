@@ -7,6 +7,7 @@ using IoT.House.Automation.Microservices.Auth.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Auth.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IoT.House.Automation.Microservices.Auth.Api.Controllers
 {
@@ -28,6 +29,12 @@ namespace IoT.House.Automation.Microservices.Auth.Api.Controllers
         {
             var mapped = _mapper.Map<LoginViewModel, Login>(login);
             var result = _authService.Signin(mapped);
+
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                return BadRequest("Username or Password is invalid");
+            }
+
             return new JsonResult(result);
         }
 
@@ -39,14 +46,25 @@ namespace IoT.House.Automation.Microservices.Auth.Api.Controllers
                 return BadRequest("Token cannot be empty");
             }
 
-            var result = _authService.GetSignedUser(token);
-
-            if (result == null)
+            try
             {
-                return BadRequest("User with this token cannot be found");
-            }
+                var result = _authService.GetSignedUser(token);
 
-            return new JsonResult(result);
+                if (result == null)
+                {
+                    return BadRequest("User with this token cannot be found");
+                }
+
+                return new JsonResult(result);
+            }
+            catch (SecurityTokenInvalidSignatureException)
+            {
+                return BadRequest("Invalid Token!");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
     }
 }

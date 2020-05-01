@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using IoT.House.Automation.Libraries.Database.SqlServer.Config;
+using IoT.House.Automation.Libraries.Database.SqlServer.DataAccess;
 using IoT.House.Automation.Microservices.Auth.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Auth.Domain.Models;
 
@@ -10,34 +13,36 @@ namespace IoT.House.Automation.Microservices.Auth.Infra.Database.Repository
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly List<User> _users = new List<User>
+        private readonly SqlServerDataAccess _dataAccess;
+
+        public AuthRepository(ISqlServerConfiguration sqlConfig)
         {
-            new User {Email = "something1@test.com", Username = "test1"},
-            new User {Email = "something2@test.com", Username = "test2"}
-        };
+            _dataAccess = new SqlServerDataAccess(sqlConfig);
+        }
 
         public bool IsCredentialsValid(Login login)
         {
-            return _users.Any(u => u.Username.Equals(login.Username));
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("Username", login.Username),
+                new SqlParameter("Password", login.Password)
+            };
+
+            var result = _dataAccess.ReadFromProcedure("Auth", "sp_iscredentialvalid", parameters);
+
+            return result.Tables[0].Rows.Count > 0;
         }
 
         public DataSet GetUserInformation(string username)
         {
-            var ds = new DataSet();
-            var dt = new DataTable();
-
-            dt.Columns.Add("Email");
-            dt.Columns.Add("Username");
-
-            var result = _users.FirstOrDefault(u => u.Username.Equals(username));
-
-            if (result != null)
+            var parameters = new List<SqlParameter>
             {
-                dt.Rows.Add(result.Email, result.Username);
-            }
+                new SqlParameter("Username", username)
+            };
 
-            ds.Tables.Add(dt);
-            return ds;
+            var result = _dataAccess.ReadFromProcedure("Auth", "sp_getuser", parameters);
+
+            return result;
         }
     }
 }
