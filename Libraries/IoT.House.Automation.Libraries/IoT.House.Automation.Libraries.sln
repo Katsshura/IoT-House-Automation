@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.House.Automation.Libraries.Mapper", "IoT.House.Automation.Libraries.Mapper\IoT.House.Automation.Libraries.Mapper.csproj", "{9D0164AF-78E2-4CD4-83F0-CA46A2A25856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Libraries.Database", "IoT.House.Automation.Libraries.Database\IoT.House.Automation.Libraries.Database.csproj", "{962DBFC1-850E-44BF-828B-A25E51A10956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.House.Automation.Libraries.Database", "IoT.House.Automation.Libraries.Database\IoT.House.Automation.Libraries.Database.csproj", "{962DBFC1-850E-44BF-828B-A25E51A10956}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Libraries.ConfigLoader", "IoT.House.Automation.Libraries.ConfigLoader\IoT.House.Automation.Libraries.ConfigLoader.csproj", "{71863BA9-DD3C-4EF0-B193-23548FF13A75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{962DBFC1-850E-44BF-828B-A25E51A10956}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{962DBFC1-850E-44BF-828B-A25E51A10956}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{962DBFC1-850E-44BF-828B-A25E51A10956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71863BA9-DD3C-4EF0-B193-23548FF13A75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71863BA9-DD3C-4EF0-B193-23548FF13A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71863BA9-DD3C-4EF0-B193-23548FF13A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71863BA9-DD3C-4EF0-B193-23548FF13A75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
