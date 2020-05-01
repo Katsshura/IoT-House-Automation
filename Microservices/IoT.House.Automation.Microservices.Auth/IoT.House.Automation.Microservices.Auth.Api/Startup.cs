@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IoT.House.Automation.Libraries.Database.SqlServer.Config;
 using IoT.House.Automation.Libraries.Mapper;
 using IoT.House.Automation.Libraries.Mapper.Abstractions;
 using IoT.House.Automation.Microservices.Auth.Application.Entities.Config;
@@ -67,6 +68,9 @@ namespace IoT.House.Automation.Microservices.Auth.Api
 
         private void ConfigureDatabaseServices(IServiceCollection services)
         {
+            services.AddSingleton<ISqlServerConfiguration>(p =>
+                new SqlServerConfiguration(Configuration.GetConnectionString("AuthDatabase")));
+
             services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
