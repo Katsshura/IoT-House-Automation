@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IoT.House.Automation.Libraries.Database" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IoT.House.Automation.Microservices.Auth.Domain\IoT.House.Automation.Microservices.Auth.Domain.csproj" />
   </ItemGroup>
 
