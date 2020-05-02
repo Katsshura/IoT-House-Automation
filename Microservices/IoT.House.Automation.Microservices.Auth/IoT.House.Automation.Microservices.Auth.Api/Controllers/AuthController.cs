@@ -27,6 +27,8 @@ namespace IoT.House.Automation.Microservices.Auth.Api.Controllers
         [HttpPost("signin")]
         public ActionResult SignIn(LoginViewModel login)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
             var mapped = _mapper.Map<LoginViewModel, Login>(login);
             var result = _authService.Signin(mapped);
 
