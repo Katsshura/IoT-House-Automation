@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IoT.House.Automation.Libraries.ConfigLoader" Version="1.0.0" />
     <PackageReference Include="IoT.House.Automation.Libraries.Mapper" Version="1.0.2" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />

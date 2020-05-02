@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IoT.House.Automation.Libraries.ConfigLoader.Abstractions;
 using IoT.House.Automation.Libraries.Database.SqlServer.Config;
 using IoT.House.Automation.Libraries.Mapper;
 using IoT.House.Automation.Libraries.Mapper.Abstractions;
@@ -72,6 +73,7 @@ namespace IoT.House.Automation.Microservices.Auth.Api
                 new SqlServerConfiguration(Configuration.GetConnectionString("AuthDatabase")));
 
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IConfigLoaderRepository, ConfigLoaderRepository>();
         }
 
         private void ConfigureExternalServices(IServiceCollection services)

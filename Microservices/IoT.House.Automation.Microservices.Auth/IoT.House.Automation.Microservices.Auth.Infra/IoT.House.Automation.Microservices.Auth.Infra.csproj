@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IoT.House.Automation.Microservices.Auth.Application\IoT.House.Automation.Microservices.Auth.Application.csproj" />
     <ProjectReference Include="..\IoT.House.Automation.Microservices.Auth.Domain\IoT.House.Automation.Microservices.Auth.Domain.csproj" />
   </ItemGroup>
 
