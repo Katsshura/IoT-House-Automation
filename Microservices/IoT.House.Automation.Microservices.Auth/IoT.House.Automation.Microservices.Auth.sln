@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Microservices.Auth.Api", "IoT.House.Automation.Microservices.Auth.Api\IoT.House.Automation.Microservices.Auth.Api.csproj", "{79863379-0FBD-4752-A1BE-661D670A86AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Microservices.Auth.Domain", "IoT.House.Automation.Microservices.Auth.Domain\IoT.House.Automation.Microservices.Auth.Domain.csproj", "{F553A144-45FF-4297-ADFE-001AF0B84483}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Microservices.Auth.Infra", "IoT.House.Automation.Microservices.Auth.Infra\IoT.House.Automation.Microservices.Auth.Infra.csproj", "{7FD98A28-3727-4A4C-A166-F7DB80354DDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Microservices.Auth.Application", "IoT.House.Automation.Microservices.Auth.Application\IoT.House.Automation.Microservices.Auth.Application.csproj", "{7A219541-D09D-4D0B-9AB8-74321D9C9E9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79863379-0FBD-4752-A1BE-661D670A86AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79863379-0FBD-4752-A1BE-661D670A86AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79863379-0FBD-4752-A1BE-661D670A86AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79863379-0FBD-4752-A1BE-661D670A86AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F553A144-45FF-4297-ADFE-001AF0B84483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F553A144-45FF-4297-ADFE-001AF0B84483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F553A144-45FF-4297-ADFE-001AF0B84483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F553A144-45FF-4297-ADFE-001AF0B84483}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FD98A28-3727-4A4C-A166-F7DB80354DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FD98A28-3727-4A4C-A166-F7DB80354DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FD98A28-3727-4A4C-A166-F7DB80354DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FD98A28-3727-4A4C-A166-F7DB80354DDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A219541-D09D-4D0B-9AB8-74321D9C9E9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A219541-D09D-4D0B-9AB8-74321D9C9E9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A219541-D09D-4D0B-9AB8-74321D9C9E9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A219541-D09D-4D0B-9AB8-74321D9C9E9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C5AAAA1-9C5B-442C-91F7-E901472C6F55}
+	EndGlobalSection
+EndGlobal
