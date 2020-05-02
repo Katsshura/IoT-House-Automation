@@ -16,17 +16,10 @@ namespace IoT.House.Automation.Libraries.ConfigLoader.Service
 
         internal void LoadConfig<T>(T instance) where T : BaseConfigLoader
         {
-            try
-            {
-                _repository.OpenConn();
 
-                var properties = typeof(T).GetProperties();
-                LoadProperties(instance, properties);
-            }
-            finally
-            {
-                _repository.CloseConn();
-            }
+            var properties = typeof(T).GetProperties();
+            LoadProperties(instance, properties);
+
         }
 
         private void LoadProperties<T>(T instance, IEnumerable<PropertyInfo> properties) where T : BaseConfigLoader
@@ -42,12 +35,12 @@ namespace IoT.House.Automation.Libraries.ConfigLoader.Service
             }
         }
 
-        private static void LoadConfigValueIntoProperty<T>(T instance, PropertyInfo property, string repoValue)
+        private static void LoadConfigValueIntoProperty<T>(T instance, PropertyInfo property, object repoValue)
             where T : BaseConfigLoader
         {
             property.SetValue(instance,
                 property.PropertyType.IsEnum
-                    ? Enum.Parse(property.PropertyType, repoValue)
+                    ? Enum.Parse(property.PropertyType, repoValue.ToString())
                     : Convert.ChangeType(repoValue, property.PropertyType));
         }
     }
