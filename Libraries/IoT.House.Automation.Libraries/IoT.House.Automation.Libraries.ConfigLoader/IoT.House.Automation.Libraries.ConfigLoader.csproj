@@ -10,6 +10,8 @@ Full Project Avaliable on github</Description>
     <PackageProjectUrl>https://github.com/Katsshura/IoT-House-Automation</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Katsshura/IoT-House-Automation/tree/libraries</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Removed Open and Close methods from repository interface</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
