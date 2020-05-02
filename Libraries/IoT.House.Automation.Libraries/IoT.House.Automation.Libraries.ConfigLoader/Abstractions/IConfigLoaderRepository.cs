@@ -2,8 +2,6 @@
 {
     public interface IConfigLoaderRepository
     {
-        string GetConfigValue(string key);
-        void OpenConn();
-        void CloseConn();
+        object GetConfigValue(string key);
     }
 }
