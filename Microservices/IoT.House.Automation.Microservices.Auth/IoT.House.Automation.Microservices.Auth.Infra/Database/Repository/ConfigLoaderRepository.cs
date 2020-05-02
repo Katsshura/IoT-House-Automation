@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using IoT.House.Automation.Libraries.ConfigLoader.Abstractions;
+using IoT.House.Automation.Libraries.Database.SqlServer.Config;
 using IoT.House.Automation.Libraries.Database.SqlServer.DataAccess;
 
 namespace IoT.House.Automation.Microservices.Auth.Infra.Database.Repository
@@ -13,9 +14,9 @@ namespace IoT.House.Automation.Microservices.Auth.Infra.Database.Repository
     {
         private readonly SqlServerDataAccess _dataAccess;
 
-        public ConfigLoaderRepository(SqlServerDataAccess dataAccess)
+        public ConfigLoaderRepository(ISqlServerConfiguration sqlConfig)
         {
-            _dataAccess = dataAccess;
+            _dataAccess = new SqlServerDataAccess(sqlConfig);
         }
 
         public object GetConfigValue(string key)
