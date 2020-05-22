@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Microservices.Arduino.Api", "IoT.House.Automation.Microservices.Arduino.Api\IoT.House.Automation.Microservices.Arduino.Api.csproj", "{39376788-947E-4561-8AA5-FF45C781B8B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39376788-947E-4561-8AA5-FF45C781B8B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39376788-947E-4561-8AA5-FF45C781B8B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39376788-947E-4561-8AA5-FF45C781B8B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39376788-947E-4561-8AA5-FF45C781B8B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05E8E615-2705-428A-BF20-4B1E8D616179}
+	EndGlobalSection
+EndGlobal
