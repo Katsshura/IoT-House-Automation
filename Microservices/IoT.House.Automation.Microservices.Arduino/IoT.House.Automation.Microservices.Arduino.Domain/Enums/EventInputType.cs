@@ -9,7 +9,6 @@ namespace IoT.House.Automation.Microservices.Arduino.Domain.Enums
         Integer,
         Decimal,
         String,
-        Boolean,
-        Range
+        Boolean
     }
 }

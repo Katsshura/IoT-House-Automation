@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using IoT.House.Automation.Microservices.Arduino.Domain.Events;
 
 namespace IoT.House.Automation.Microservices.Arduino.Domain.Models
 {
-    public class Arduino
+    public class ArduinoInfo
     {
         public Guid UniqueIdentifier { get; set; }
         public string Name { get; set; }
