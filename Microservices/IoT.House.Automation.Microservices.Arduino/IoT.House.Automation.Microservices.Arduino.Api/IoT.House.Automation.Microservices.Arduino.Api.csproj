@@ -9,8 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="IoT.House.Automation.Libraries.Mapper" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IoT.House.Automation.Microservices.Arduino.Application\IoT.House.Automation.Microservices.Arduino.Application.csproj" />
   </ItemGroup>
 
 </Project>
