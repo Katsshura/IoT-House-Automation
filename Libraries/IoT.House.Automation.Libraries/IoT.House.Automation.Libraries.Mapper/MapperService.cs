@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -106,9 +107,30 @@ namespace IoT.House.Automation.Libraries.Mapper
             {
                 property.SetValue(instance, Enum.Parse(property.PropertyType, data.ToString()));
             }
+            else if (property.PropertyType == typeof(DateTime))
+            {
+                DateTime.TryParse(data.ToString(), out var date);
+                property.SetValue(instance, date);
+            }
             else
             {
-                property.SetValue(instance, Convert.ChangeType(data, property.PropertyType));
+                property.SetValue(instance, ConvertType(property.PropertyType, data));
+            }
+        }
+
+        private object ConvertType(Type convertTo, object value)
+        {
+            try
+            {
+                return Convert.ChangeType(value, convertTo);
+            }
+            catch (InvalidCastException)
+            {
+                var converter = TypeDescriptor.GetConverter(convertTo);
+
+                return converter.CanConvertFrom(value.GetType())
+                    ? converter.ConvertFrom(value)
+                    : converter.ConvertFromString(value.ToString());
             }
         }
 
