@@ -64,8 +64,8 @@ namespace IoT.House.Automation.Libraries.Mapper
 
             foreach (DataColumn column in columns)
             {
-                if ((attribute == null || attribute.IgnoreOnMapping) &&
-                    !column.Caption.Equals(qualifiedName, StringComparison.InvariantCultureIgnoreCase)) continue;
+                //if (attribute == null || attribute.IgnoreOnMapping) continue;
+                if (!column.Caption.Equals(qualifiedName, StringComparison.InvariantCultureIgnoreCase) || (attribute != null && attribute.IgnoreOnMapping)) continue;
 
                 var data = source[qualifiedName];
                 SetPropertyValue(property, instance, data);
