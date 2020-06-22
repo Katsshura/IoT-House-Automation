@@ -13,4 +13,10 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IoT.House.Automation.Libraries.ConfigLoader\IoT.House.Automation.Libraries.ConfigLoader.csproj" />
+    <ProjectReference Include="..\IoT.House.Automation.Libraries.Database\IoT.House.Automation.Libraries.Database.csproj" />
+    <ProjectReference Include="..\IoT.House.Automation.Libraries.Mapper\IoT.House.Automation.Libraries.Mapper.csproj" />
+  </ItemGroup>
+
 </Project>
