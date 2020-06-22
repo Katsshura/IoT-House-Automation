@@ -105,7 +105,7 @@ namespace IoT.House.Automation.Libraries.Mapper
 
             if (property.PropertyType.IsEnum)
             {
-                property.SetValue(instance, Enum.Parse(property.PropertyType, data.ToString()));
+                property.SetValue(instance, Enum.Parse(property.PropertyType, data.ToString(), true));
             }
             else if (property.PropertyType == typeof(DateTime))
             {
