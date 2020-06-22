@@ -2,7 +2,7 @@
 {
     public enum TestingEnumA
     {
-        First,
+        First = 1,
         Second,
         Third,
         Fourth

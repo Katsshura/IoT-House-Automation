@@ -28,14 +28,13 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper.Models
 
     public class TestingModelC
     {
+        [Mapper(true)]
         public string DummyString { get; set; }
         public int DummyInteger { get; set; }
-        
-        [Mapper(true)]
         public bool DummyBoolean { get; set; }
-        public double DummyDouble { get; set; }
 
         [Mapper(true)]
+        public double DummyDouble { get; set; }
         public TestingEnumA DummyEnumA { get; set; }
     }
 }
