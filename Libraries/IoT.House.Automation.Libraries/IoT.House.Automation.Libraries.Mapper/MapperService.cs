@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using IoT.House.Automation.Libraries.Mapper.Abstractions;
@@ -111,6 +112,11 @@ namespace IoT.House.Automation.Libraries.Mapper
             {
                 DateTime.TryParse(data.ToString(), out var date);
                 property.SetValue(instance, date);
+            }
+            else if (property.PropertyType == typeof(IPAddress))
+            {
+                IPAddress.TryParse(data.ToString(), out var address);
+                property.SetValue(instance, address);
             }
             else
             {
