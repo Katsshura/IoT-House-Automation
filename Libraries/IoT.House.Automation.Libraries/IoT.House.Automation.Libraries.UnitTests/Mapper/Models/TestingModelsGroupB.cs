@@ -42,6 +42,7 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper.Models
         [Mapper(true)]
         public int DummyInteger { get; set; }
 
+
         [Mapper("DummyEvents", true)]
         public IEnumerable<EventModelD> DummyEvents { get; set; }
     }

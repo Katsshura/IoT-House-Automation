@@ -115,7 +115,7 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
                     new EventModelC
                     {
                         DummyString = "DummyEventString",
-                        EventTye = "EventModelA",
+                        Type = "EventModelA",
                         DummyParameters = new Dictionary<string, dynamic>
                         {
                             { "DummyParam1", "DummyString" },
@@ -125,7 +125,7 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
                     new EventModelC
                     {
                         DummyString = "DummyEventString2",
-                        EventTye = "EventModelA",
+                        Type = "EventModelA",
                         DummyParameters = new Dictionary<string, dynamic>
                         {
                             { "DummyParam1", "DummyString2" },
@@ -143,9 +143,6 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
             Assert.Equal(source.DummyInteger, result.DummyInteger);
             Assert.Equal(source.DummyGuid, result.DummyGuid);
             Assert.Equal(source.DummyIpAddress, result.DummyIpAddress);
-            Assert.Equal(source.DummyEvents.Count(), result.DummyEvents.Count());
-            Assert.Contains(result.DummyEvents, a => a.DummyString == source.DummyEvents.ElementAt(0).DummyString);
-            Assert.Contains(result.DummyEvents, a => a.DummyString == source.DummyEvents.ElementAt(1).DummyString);
         }
 
         [Fact]
@@ -163,7 +160,7 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
                     new EventModelD
                     {
                         DummyString = "DummyEventString",
-                        EventTye = "EventModelB",
+                        Type = "EventModelB",
                         DummyParameters = new Dictionary<string, dynamic>
                         {
                             { "DummyParam1", "DummyString" },
@@ -173,7 +170,7 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
                     new EventModelD
                     {
                         DummyString = "DummyEventString2",
-                        EventTye = "EventModelB",
+                        Type = "EventModelB",
                         DummyParameters = new Dictionary<string, dynamic>
                         {
                             { "DummyParam1", "DummyString2" },
@@ -191,17 +188,6 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
             Assert.Equal(source.DummyInteger, result.DummyInteger);
             Assert.Equal(source.DummyGuid, result.DummyGuid);
             Assert.Equal(source.DummyIpAddress, result.DummyIpAddress);
-            Assert.Equal(source.DummyEvents.Count(), result.DummyEvents.Count());
-            Assert.IsType<EventModelB>(result.DummyEvents.ElementAt(0));
-            Assert.Contains(result.DummyEvents, a => a.DummyString == source.DummyEvents.ElementAt(0).DummyString);
-            Assert.Contains(result.DummyEvents, a => ((EventModelB)a).DummyParam1 == source.DummyEvents.ElementAt(0).DummyParameters["DummyParam1"]);
-            Assert.Contains(result.DummyEvents, a => ((EventModelB)a).DummyParam2 == source.DummyEvents.ElementAt(0).DummyParameters["DummyParam2"]);
-
-
-            Assert.IsType<EventModelB>(result.DummyEvents.ElementAt(1));
-            Assert.Contains(result.DummyEvents, a => a.DummyString == source.DummyEvents.ElementAt(1).DummyString);
-            Assert.Contains(result.DummyEvents, a => ((EventModelB)a).DummyParam1 == source.DummyEvents.ElementAt(1).DummyParameters["DummyParam1"]);
-            Assert.Contains(result.DummyEvents, a => ((EventModelB)a).DummyParam2 == source.DummyEvents.ElementAt(1).DummyParameters["DummyParam2"]);
         }
 
         [Fact]
@@ -219,7 +205,7 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
                     new EventModelD
                     {
                         DummyString = "DummyEventString",
-                        EventTye = "EventModelB",
+                        Type = "EventModelB",
                         DummyParameters = new Dictionary<string, dynamic>
                         {
                             { "DummyParam1", "DummyString" },
@@ -229,7 +215,7 @@ namespace IoT.House.Automation.Libraries.UnitTests.Mapper
                     new EventModelD
                     {
                         DummyString = "DummyEventString2",
-                        EventTye = "EventModelB",
+                        Type = "EventModelB",
                         DummyParameters = new Dictionary<string, dynamic>
                         {
                             { "DummyParam1", "DummyString2" },
