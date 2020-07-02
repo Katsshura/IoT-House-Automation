@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,20 +29,25 @@ namespace IoT.House.Automation.Libraries.Mapper
 
         public TResult Map<TSource, TResult>(TSource source) where TResult : new()
         {
-            
-            var properties = GetProperties<TResult>();
             var instance = new TResult();
+            var properties = GetProperties<TSource>();
 
             foreach (var property in properties)
             {
-                var row = GenerateDataRowFromObject(source);
-                SetPropertyValueFromDataRow(property, instance, row);
-            }
+                var attribute = GetMapperAttributeFromProperty(property);
+                var qualifiedName = GetQualifiedName(attribute, property);
 
+                var data = property.GetValue(source);
+
+                if (IsAttributeIgnoreOnMapping(attribute) || data == default || IsGenericTypeAnEnumerable(property.PropertyType)) continue;
+
+                SetPropertyValue(typeof(TResult).GetProperty(qualifiedName), instance, data);
+            }
+         
             return instance;
         }
 
-        private IEnumerable<PropertyInfo> GetProperties<T>() where T : new()
+        private IEnumerable<PropertyInfo> GetProperties<T>()
         {
             if (IsGenericTypeAnEnumerable(typeof(T)))
             {
@@ -54,10 +60,7 @@ namespace IoT.House.Automation.Libraries.Mapper
 
         private void SetPropertyValueFromDataRow(PropertyInfo property, object instance, DataRow source)
         {
-            if (property.PropertyType.FullName != null && !property.PropertyType.FullName.ToLowerInvariant().Contains("system"))
-            {
-                InstantiateObjectAndFulfill(property, instance, source);
-            }
+            InstantiateComplexObject(property, instance, source);
 
             var columns = source.Table.Columns;
             var attribute = GetMapperAttributeFromProperty(property);
@@ -67,11 +70,24 @@ namespace IoT.House.Automation.Libraries.Mapper
             foreach (DataColumn column in columns)
             {
                 //if (attribute == null || attribute.IgnoreOnMapping) continue;
-                if (!column.Caption.Equals(qualifiedName, StringComparison.InvariantCultureIgnoreCase) || (attribute != null && attribute.IgnoreOnMapping)) continue;
+                if (!column.Caption.Equals(qualifiedName, StringComparison.InvariantCultureIgnoreCase) || IsAttributeIgnoreOnMapping(attribute)) continue;
 
                 var data = source[qualifiedName];
                 SetPropertyValue(property, instance, data);
                 break;
+            }
+        }
+
+        private static bool IsAttributeIgnoreOnMapping(MapperAttribute attribute)
+        {
+            return attribute != null && attribute.IgnoreOnMapping;
+        }
+
+        private void InstantiateComplexObject(PropertyInfo property, object instance, object source)
+        {
+            if (property.PropertyType.FullName != null && !property.PropertyType.FullName.ToLowerInvariant().Contains("system"))
+            {
+                InstantiateObjectAndFulfill(property, instance, source);
             }
         }
 
@@ -82,7 +98,7 @@ namespace IoT.House.Automation.Libraries.Mapper
                 .ToArray().FirstOrDefault();
         }
 
-        private void InstantiateObjectAndFulfill(PropertyInfo property, object instance, DataRow source)
+        private void InstantiateObjectAndFulfill(PropertyInfo property, object instance, object source)
         {
             var propertyInstance = property.GetValue(instance);
 
@@ -147,28 +163,7 @@ namespace IoT.House.Automation.Libraries.Mapper
 
         private bool IsGenericTypeAnEnumerable(params Type[] types)
         {
-            return types.Any(type => type.GetInterface("IEnumerable") != null);
-        }
-
-        private DataRow GenerateDataRowFromObject(object source)
-        {
-            var properties = source.GetType().GetProperties();
-            var dataTable = new DataTable();
-
-            foreach (var property in properties)
-            {
-                dataTable.Columns.Add(property.Name);
-            }
-
-            var dataRow = dataTable.NewRow();
-
-            foreach (var property in properties)
-            {
-                dataRow[property.Name] = property.GetValue(source).ToString();
-            }
-
-            dataTable.Dispose();
-            return dataRow;
+            return types.Any(type => type.GetInterface("IEnumerable") != null && type != typeof(string));
         }
     }
 }

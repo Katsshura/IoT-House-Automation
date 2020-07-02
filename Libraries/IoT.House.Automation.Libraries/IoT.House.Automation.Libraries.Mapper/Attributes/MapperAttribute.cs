@@ -7,6 +7,7 @@ namespace IoT.House.Automation.Libraries.Mapper.Attributes
     public class MapperAttribute: Attribute
     {
         public string CustomFieldName { get; }
+        public Type ConvertTo { get; }
         public bool IgnoreOnMapping { get; }
         public bool IsParameter { get; }
 
@@ -27,9 +28,13 @@ namespace IoT.House.Automation.Libraries.Mapper.Attributes
             IgnoreOnMapping = ignoreOnMapping;
         }
 
-        public MapperAttribute(string fieldName, bool ignoreOnMapping, bool isParameter) : this(fieldName)
+        public MapperAttribute(string fieldName, Type convertTo, bool ignoreOnMapping) : this(fieldName, ignoreOnMapping)
         {
-            IgnoreOnMapping = ignoreOnMapping;
+            ConvertTo = convertTo;
+        }
+
+        public MapperAttribute(string fieldName, Type convertTo, bool ignoreOnMapping, bool isParameter) : this(fieldName, convertTo, ignoreOnMapping)
+        {
             IsParameter = isParameter;
         }
     }
