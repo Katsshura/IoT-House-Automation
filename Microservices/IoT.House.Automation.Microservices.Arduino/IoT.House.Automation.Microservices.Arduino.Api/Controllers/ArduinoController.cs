@@ -30,43 +30,31 @@ namespace IoT.House.Automation.Microservices.Arduino.Api.Controllers
         {
             var res = MapToDomain(arduino);
 
-            return new JsonResult("OK");
+            return Ok($"Information about arduino: {res.UniqueIdentifier} - was saved with success!");
         }
 
         public ArduinoInfo MapToDomain(ArduinoViewModel model)
         {
-            var result = new ArduinoInfo
-            {
-                Name = model.Name,
-                IP = IPAddress.Parse(model.IP),
-                Port = model.Port,
-                UniqueIdentifier = new Guid(model.UniqueIdentifier),
-                Events = model.Events.Select(MapEvent)
-            };
+            var result = _mapper.Map<ArduinoViewModel, ArduinoInfo>(model);
+            result.Events = model.Events.Select(MapEvent);
 
             return result;
         }
 
         public Event MapEvent(EventViewModel model)
         {
-            if (model.EventType.Equals("RangeEvent", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return new RangeEvent
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    ExpectedInputType = Enum.Parse<EventInputType>(model.ExpectedInputType, true),
-                    MaxValue = model.Parameters["MaxValue"],
-                    MinValue = model.Parameters["MinValue"]
-                };
-            }
+            return model.EventType.Equals("RangeEvent", StringComparison.InvariantCultureIgnoreCase)
+                ? MapEventWithParameters<RangeEvent>(model)
+                : _mapper.Map<EventViewModel, Event>(model);
+        }
 
-            return new Event
-            {
-                Name = model.Name,
-                Description = model.Description,
-                ExpectedInputType = Enum.Parse<EventInputType>(model.ExpectedInputType, true)
-            };
+        private TEvent MapEventWithParameters<TEvent>(EventViewModel model)
+            where TEvent : Event, new()
+        {
+            var @event = _mapper.Map<EventViewModel, TEvent>(model);
+            var keys = model.Parameters.Keys.ToList();
+            keys.ForEach(key => typeof(TEvent).GetProperty(key)?.SetValue(@event, model.Parameters[key]));
+            return @event;
         }
     }
 }

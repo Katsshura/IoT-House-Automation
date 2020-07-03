@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using IoT.House.Automation.Libraries.Mapper.Attributes;
 
 namespace IoT.House.Automation.Microservices.Arduino.Api.ViewModel
 {
@@ -19,6 +20,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Api.ViewModel
 
         [Required]
         [RegularExpression("^(?i)(RangeEvent|Event)$")]
+        [Mapper(true)]
         public string EventType { get; set; }
 
         public Dictionary<string, dynamic> Parameters { get; set; }
