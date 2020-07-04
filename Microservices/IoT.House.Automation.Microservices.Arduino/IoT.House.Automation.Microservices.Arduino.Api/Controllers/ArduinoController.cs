@@ -7,6 +7,7 @@ using IoT.House.Automation.Libraries.Mapper.Abstractions;
 using IoT.House.Automation.Microservices.Arduino.Api.ViewModel;
 using IoT.House.Automation.Microservices.Arduino.Domain.Enums;
 using IoT.House.Automation.Microservices.Arduino.Domain.Events;
+using IoT.House.Automation.Microservices.Arduino.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Arduino.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,32 @@ namespace IoT.House.Automation.Microservices.Arduino.Api.Controllers
     public class ArduinoController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IArduino _arduino;
 
-        public ArduinoController(IMapper mapper)
+        public ArduinoController(IMapper mapper, IArduino arduino)
         {
             _mapper = mapper;
+            _arduino = arduino;
         }
 
         [HttpPost("register")]
         public ActionResult RegisterNewArduino(ArduinoViewModel arduino)
         {
-            var res = MapToDomain(arduino);
-
-            return Ok($"Information about arduino: {res.UniqueIdentifier} - was saved with success!");
+            try
+            {
+                var result = MapToDomain(arduino);
+                _arduino.Register(result);
+                return Ok($"Information about arduino: {result.UniqueIdentifier} - was saved with success!");
+            }
+            catch (ApplicationException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+            
         }
 
         public ArduinoInfo MapToDomain(ArduinoViewModel model)
