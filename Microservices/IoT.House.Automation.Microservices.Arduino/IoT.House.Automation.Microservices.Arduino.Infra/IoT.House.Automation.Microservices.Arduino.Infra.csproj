@@ -8,4 +8,8 @@
     <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IoT.House.Automation.Microservices.Arduino.Domain\IoT.House.Automation.Microservices.Arduino.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
