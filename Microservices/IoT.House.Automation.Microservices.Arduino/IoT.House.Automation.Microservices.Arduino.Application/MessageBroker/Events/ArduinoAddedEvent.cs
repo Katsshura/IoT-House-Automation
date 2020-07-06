@@ -8,7 +8,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.E
     public class ArduinoAddedEvent : Event
     {
         public ArduinoInfo Arduino { get; }
-        public override Type Type => this.GetType();
+        public override string Type => this.GetType().Name;
 
         public ArduinoAddedEvent(ArduinoInfo arduino)
         {

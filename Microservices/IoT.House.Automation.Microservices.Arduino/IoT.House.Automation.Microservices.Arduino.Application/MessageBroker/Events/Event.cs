@@ -9,7 +9,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.E
         public Guid Id { get; }
         public DateTime CreatedAt { get; }
 
-        public abstract Type Type { get; }
+        public abstract string Type { get; }
 
         protected Event()
         {
