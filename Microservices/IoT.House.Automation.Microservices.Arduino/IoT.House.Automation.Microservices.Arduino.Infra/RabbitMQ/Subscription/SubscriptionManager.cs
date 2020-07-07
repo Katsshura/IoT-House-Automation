@@ -30,6 +30,29 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Subscription
                 typeof(TEvent)
                 );
         }
+        
+        public bool HasSubscriptionsForEvent(string eventName) => _handlers.ContainsKey(eventName);
+
+        public IEnumerable<Subscription> GetHandlersForEvent<TEvent>()
+            where TEvent : Event
+        {
+            var key = typeof(TEvent).Name;
+            return GetHandlersForEvent(key);
+        }
+
+        public IEnumerable<Subscription> GetHandlersForEvent(string eventName) => _handlers[eventName];
+
+        public Type GetEventTypeByName(string eventName) => _handlers[eventName]?.FirstOrDefault()?.EventType;
+
+        public void RemoveSubscription<TEvent, TEventHandler>()
+            where TEvent : Event
+            where TEventHandler : IEventHandler<TEvent>
+        {
+
+            var eventName = typeof(TEvent).Name;
+            var handlerToRemove = FindSubscriptionToRemove(eventName, typeof(TEventHandler));
+            RemoveSubscription(eventName, handlerToRemove);
+        }
 
         private void AddSubscription(Type handlerType, string eventName, Type eventType)
         {
@@ -49,18 +72,8 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Subscription
                 handlerType, eventType)
                 );
         }
-        
-        public void RemoveSubscription<TEvent, TEventHandler>()
-            where TEvent : Event
-            where TEventHandler : IEventHandler<TEvent>
-        {
 
-            var eventName = typeof(TEvent).Name;
-            var handlerToRemove = FindSubscriptionToRemove(eventName, typeof(TEventHandler));
-            RemoveSubscription(eventName, handlerToRemove);
-        }
-
-        Subscription FindSubscriptionToRemove(string eventName, Type eventHandler)
+        private Subscription FindSubscriptionToRemove(string eventName, Type eventHandler)
         {
             return !HasSubscriptionsForEvent(eventName) 
                 ? null 
@@ -80,18 +93,5 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Subscription
             _handlers.Remove(eventName);
             OnEventRemoved?.Invoke(this, eventName);
         }
-
-        public bool HasSubscriptionsForEvent(string eventName) => _handlers.ContainsKey(eventName);
-
-        public IEnumerable<Subscription> GetHandlersForEvent<TEvent>()
-            where TEvent : Event
-        {
-            var key = typeof(TEvent).Name;
-            return GetHandlersForEvent(key);
-        }
-
-        public IEnumerable<Subscription> GetHandlersForEvent(string eventName) => _handlers[eventName];
-
-        public Type GetEventTypeByName(string eventName) => _handlers[eventName]?.FirstOrDefault()?.EventType;
     }
 }

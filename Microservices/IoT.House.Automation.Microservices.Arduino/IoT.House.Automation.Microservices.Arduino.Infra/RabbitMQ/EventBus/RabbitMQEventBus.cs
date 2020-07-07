@@ -40,7 +40,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
 
         }
 
-        void OnSubscriptionManagerEventAdded(object _, string eventName)
+        private void OnSubscriptionManagerEventAdded(object _, string eventName)
         {
             using (var channel = _connection.CreateModel())
             {
@@ -51,10 +51,12 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
                     exchange: Exchange,
                     routingKey: eventName
                 );
+
+                CreateConsumer(_consumerChannel, eventName);
             }
         }
 
-        void OnSubscriptionManagerEventRemoved(object _, string eventName)
+        private void OnSubscriptionManagerEventRemoved(object _, string eventName)
         {
             using (var channel = _connection.CreateModel())
             {
@@ -63,6 +65,8 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
                     exchange: Exchange,
                     routingKey: eventName
                 );
+
+                _consumerChannel.BasicCancel(eventName);
 
                 if (!_subscriptionManager.IsEmpty) return;
                 _consumerChannel.Close();
@@ -102,13 +106,11 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
         public void Subscribe<TEvent, TEventHandler>() where TEvent : Event where TEventHandler : IEventHandler<TEvent>
         {
             _subscriptionManager.AddSubscription<TEvent, TEventHandler>();
-            CreateConsumer(_consumerChannel, typeof(TEvent).Name);
         }
 
         public void Unsubscribe<TEvent, TEventHandler>() where TEvent : Event where TEventHandler : IEventHandler<TEvent>
         {
             _subscriptionManager.RemoveSubscription<TEvent, TEventHandler>();
-            _consumerChannel.BasicCancel(typeof(TEvent).Name);
         }
 
         private IModel CreateConsumerChannel()
@@ -128,7 +130,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
                 var eventName = ea.RoutingKey;
                 var message = Encoding.UTF8.GetString(ea.Body.ToArray());
 
-                await HandleEvent(eventName, message);
+                await HandleEvent(eventName, message, ea.DeliveryTag, channel);
             };
 
             channel.BasicConsume(queue: queueName,
@@ -142,7 +144,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
             };
         }
 
-        private async Task HandleEvent(string eventName, string message)
+        private async Task HandleEvent(string eventName, string message, ulong deliveryTag, IModel channel)
         {
             if (!_subscriptionManager.HasSubscriptionsForEvent(eventName)) return;
 
@@ -150,7 +152,16 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
 
             foreach (var subscription in subscriptions)
             {
-                await subscription.Handle(message, _provider);
+                var result= subscription.Handle(message, _provider);
+
+                if (result.IsFaulted || result.IsCanceled)
+                {
+                    channel.BasicNack(deliveryTag, false, true);
+                }
+                else
+                {
+                    channel.BasicAck(deliveryTag, false);
+                }
             }
 
         }

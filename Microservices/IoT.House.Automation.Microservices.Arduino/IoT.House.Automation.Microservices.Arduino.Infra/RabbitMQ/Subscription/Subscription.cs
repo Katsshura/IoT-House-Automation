@@ -22,12 +22,11 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Subscription
         public async Task Handle(string message, IServiceProvider provider)
         {
             var settings = NewtonsoftJsonUtil.UseCustomNewtonsoftSettings();
+            var eventData = JsonConvert.DeserializeObject(message, EventType, settings);
+            var handler = provider.GetService(HandlerType);
 
-                var eventData = JsonConvert.DeserializeObject(message, EventType, settings);
-                var handler = provider.GetService(HandlerType);
-
-                await (Task) HandlerType.GetMethod("Handle")
-                    .Invoke(handler, new[] {eventData});
+            await (Task)HandlerType.GetMethod("Handle")
+                .Invoke(handler, new[] { eventData });
         }
 
         public static Subscription New(Type handlerType, Type eventType) => new Subscription(handlerType, eventType);

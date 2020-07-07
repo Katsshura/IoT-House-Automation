@@ -11,7 +11,9 @@ namespace IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.H
     {
         public Task Handle(ArduinoAddedEvent @event)
         {
-            throw new NotImplementedException();
+            var ran = new Random().Next(1, 100);
+
+            return ran < 50 ? Task.CompletedTask : Task.FromException(new NotImplementedException());
         }
     }
 }
