@@ -4,9 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using IoT.House.Automation.Libraries.Mapper;
 using IoT.House.Automation.Libraries.Mapper.Abstractions;
+using IoT.House.Automation.Microservices.Arduino.Application.Converters;
+using IoT.House.Automation.Microservices.Arduino.Application.Interfaces;
+using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Events;
+using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Handlers;
 using IoT.House.Automation.Microservices.Arduino.Application.Services;
 using IoT.House.Automation.Microservices.Arduino.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Arduino.Infra.Mongo;
+using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Connection;
+using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +22,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
 
 namespace IoT.House.Automation.Microservices.Arduino.Api
 {
@@ -34,6 +42,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
             ConfigureDomainServices(services);
             ConfigureExternalServices(services);
             ConfigureMongoDbServices(services);
+            ConfigureMessageBroker(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -69,6 +78,18 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
                 ConventionRegistry.Register("My Solution Conventions", pack, t => true);
                 return client;
             });
+        }
+        private void ConfigureMessageBroker(IServiceCollection services)
+        {
+            services.AddSingleton(p => new PersisterConnection(new ConnectionFactory { HostName = "localhost" }));
+            services.AddSingleton<IEventBus, RabbitMQEventBus>();
+
+            ConfigureHandlers(services);
+        }
+
+        private void ConfigureHandlers(IServiceCollection services)
+        {
+            services.AddSingleton<ArduinoAddedEventHandler>();
         }
     }
 }

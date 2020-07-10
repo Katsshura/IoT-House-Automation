@@ -41,9 +41,9 @@ namespace IoT.House.Automation.Microservices.Arduino.Api.Controllers
             {
                 return Conflict(ex.Message);
             }
-            catch
+            catch(Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
             
         }
