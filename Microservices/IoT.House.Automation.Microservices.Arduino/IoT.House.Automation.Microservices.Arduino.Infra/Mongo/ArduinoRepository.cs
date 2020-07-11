@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using IoT.House.Automation.Microservices.Arduino.Application.Interfaces;
 using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Events;
-using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Handlers;
 using IoT.House.Automation.Microservices.Arduino.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Arduino.Domain.Models;
 using MongoDB.Driver;
@@ -30,7 +29,6 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.Mongo
             if (exists) throw new ApplicationException("Arduino already registered in database");
 
             _collection.InsertOne(arduino);
-            _eventBus.Subscribe<ArduinoAddedEvent, ArduinoAddedEventHandler>();
 
             _eventBus.Publish(new ArduinoAddedEvent(arduino));
         }
