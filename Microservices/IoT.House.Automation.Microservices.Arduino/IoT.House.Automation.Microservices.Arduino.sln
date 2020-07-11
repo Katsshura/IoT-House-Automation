@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.House.Automation.Micros
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.House.Automation.Microservices.Arduino.Application", "IoT.House.Automation.Microservices.Arduino.Application\IoT.House.Automation.Microservices.Arduino.Application.csproj", "{C07D3A41-42BB-4B01-8BCA-1D622D79BF49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Microservices.Arduino.Infra", "IoT.House.Automation.Microservices.Arduino.Infra\IoT.House.Automation.Microservices.Arduino.Infra.csproj", "{AEE3FFD9-7FC7-4651-89D3-21B903E133CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoT.House.Automation.Microservices.Arduino.Infra", "IoT.House.Automation.Microservices.Arduino.Infra\IoT.House.Automation.Microservices.Arduino.Infra.csproj", "{AEE3FFD9-7FC7-4651-89D3-21B903E133CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoT.House.Automation.Microservices.Arduino.Sync", "IoT.House.Automation.Microservices.Arduino.Sync\IoT.House.Automation.Microservices.Arduino.Sync.csproj", "{A26B68BC-935E-44F3-9DB5-36114CC0BA13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AEE3FFD9-7FC7-4651-89D3-21B903E133CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEE3FFD9-7FC7-4651-89D3-21B903E133CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEE3FFD9-7FC7-4651-89D3-21B903E133CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A26B68BC-935E-44F3-9DB5-36114CC0BA13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A26B68BC-935E-44F3-9DB5-36114CC0BA13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A26B68BC-935E-44F3-9DB5-36114CC0BA13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A26B68BC-935E-44F3-9DB5-36114CC0BA13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

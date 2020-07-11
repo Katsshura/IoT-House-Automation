@@ -7,7 +7,6 @@ using IoT.House.Automation.Libraries.Mapper.Abstractions;
 using IoT.House.Automation.Microservices.Arduino.Application.Converters;
 using IoT.House.Automation.Microservices.Arduino.Application.Interfaces;
 using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Events;
-using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Handlers;
 using IoT.House.Automation.Microservices.Arduino.Application.Services;
 using IoT.House.Automation.Microservices.Arduino.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Arduino.Infra.Mongo;
@@ -79,17 +78,11 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
                 return client;
             });
         }
+
         private void ConfigureMessageBroker(IServiceCollection services)
         {
             services.AddSingleton(p => new PersisterConnection(new ConnectionFactory { HostName = "localhost" }));
             services.AddSingleton<IEventBus, RabbitMQEventBus>();
-
-            ConfigureHandlers(services);
-        }
-
-        private void ConfigureHandlers(IServiceCollection services)
-        {
-            services.AddSingleton<ArduinoAddedEventHandler>();
         }
     }
 }
