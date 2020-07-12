@@ -6,6 +6,7 @@ using IoT.House.Automation.Libraries.Mapper;
 using IoT.House.Automation.Libraries.Mapper.Abstractions;
 using IoT.House.Automation.Microservices.Arduino.Application.Converters;
 using IoT.House.Automation.Microservices.Arduino.Application.Interfaces;
+using IoT.House.Automation.Microservices.Arduino.Application.Job;
 using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Events;
 using IoT.House.Automation.Microservices.Arduino.Application.Services;
 using IoT.House.Automation.Microservices.Arduino.Domain.Interfaces;
@@ -22,6 +23,9 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 using RabbitMQ.Client;
 
 namespace IoT.House.Automation.Microservices.Arduino.Api
@@ -40,14 +44,15 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
         {
             ConfigureDomainServices(services);
             ConfigureExternalServices(services);
+            ConfigureApplicationServices(services);
             ConfigureMongoDbServices(services);
             ConfigureMessageBroker(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -55,12 +60,43 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
             }
 
             app.UseMvc();
+
+            lifetime.ApplicationStarted.Register(() => OnApplicationStarted(app.ApplicationServices));
+        }
+
+        private void OnApplicationStarted(IServiceProvider provider)
+        {
+            ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
+            var scheduler = schedulerFactory.GetScheduler().Result;
+
+            scheduler.JobFactory = provider.GetService<HeartbeatJobFactory>();
+
+            var jobDetail = JobBuilder.Create<HeartbeatJob>()
+                .WithIdentity("HeartBeatJob")
+                .Build();
+
+            var trigger = TriggerBuilder.Create()
+                .ForJob(jobDetail)
+                .WithCronSchedule(Configuration.GetSection("Cron").Value)
+                .WithIdentity("HeartbeatTrigger")
+                .StartNow()
+                .Build();
+
+            scheduler.ScheduleJob(jobDetail, trigger);
+            scheduler.Start();
+        }
+
+        private void ConfigureApplicationServices(IServiceCollection services)
+        {
+            services.AddSingleton<IHeartbeat, HeartbeatService>();
+            services.AddSingleton<HeartbeatJobFactory>();
+            services.AddSingleton<HeartbeatJob>();
         }
 
         private void ConfigureDomainServices(IServiceCollection services)
         {
             services.AddSingleton<IMap, MapService>();
-            services.AddScoped<IArduino, ArduinoRepository>();
+            services.AddSingleton<IArduino, ArduinoRepository>();
         }
 
         private void ConfigureExternalServices(IServiceCollection services)
