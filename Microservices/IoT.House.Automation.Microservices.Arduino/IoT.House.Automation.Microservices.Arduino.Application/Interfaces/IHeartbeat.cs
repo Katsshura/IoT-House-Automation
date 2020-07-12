@@ -1,7 +1,9 @@
-﻿namespace IoT.House.Automation.Microservices.Arduino.Application.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace IoT.House.Automation.Microservices.Arduino.Application.Interfaces
 {
     public interface IHeartbeat
     {
-        void Start();
+        Task Start();
     }
 }
