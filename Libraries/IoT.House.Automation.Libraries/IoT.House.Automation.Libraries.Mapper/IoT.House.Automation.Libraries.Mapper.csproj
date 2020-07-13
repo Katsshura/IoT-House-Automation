@@ -11,7 +11,7 @@ Full Project Avaliable on github</Description>
     <PackageProjectUrl>https://github.com/Katsshura/IoT-House-Automation</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Katsshura/IoT-House-Automation</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
 </Project>
