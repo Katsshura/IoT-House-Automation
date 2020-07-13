@@ -7,7 +7,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Config
 {
     public class RabbitMQConfig : BaseConfigLoader
     {
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
         public string Exchange { get; set; }
         public string ExchangeType { get; set; }
 

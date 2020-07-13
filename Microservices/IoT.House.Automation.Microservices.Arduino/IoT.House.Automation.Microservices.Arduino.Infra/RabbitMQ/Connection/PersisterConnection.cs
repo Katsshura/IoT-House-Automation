@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Config;
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;
@@ -21,10 +22,14 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Connection
 
         private object _syncRoot = new object();
 
-        public PersisterConnection(IConnectionFactory connectionFactory, int retryCount = 5)
+        public RabbitMQConfig Config { get; }
+
+        public PersisterConnection(RabbitMQConfig mqConfig, int retryCount = 5)
         {
-            _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+            Config = mqConfig;
             _retryCount = retryCount;
+            
+            _connectionFactory = new ConnectionFactory { Uri = new Uri(Config.Uri) };
         }
 
         private bool IsConnected => _connection != null && _connection.IsOpen && !_disposed;
