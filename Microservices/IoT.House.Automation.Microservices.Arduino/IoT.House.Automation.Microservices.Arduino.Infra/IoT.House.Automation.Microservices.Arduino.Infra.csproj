@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IoT.House.Automation.Libraries.ConfigLoader" Version="1.0.1" />
+    <PackageReference Include="IoT.House.Automation.Libraries.Database" Version="1.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Polly" Version="7.2.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IoT.House.Automation.Microservices.Arduino.Application\IoT.House.Automation.Microservices.Arduino.Application.csproj" />
+    <ProjectReference Include="..\IoT.House.Automation.Microservices.Arduino.Domain\IoT.House.Automation.Microservices.Arduino.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

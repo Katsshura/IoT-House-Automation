@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  arduino-api:
+    image: katsshura/iot-house-automation-arduino-api
+    build:
+      context: .
+      dockerfile: Dockerfile-API
+    ports:
+        - "9002:80"
+
+  arduino-sync:
+    image: katsshura/iot-house-automation-arduino-sync
+    build:
+        context: .
+        dockerfile: Dockerfile-Sync
+    tty: true
