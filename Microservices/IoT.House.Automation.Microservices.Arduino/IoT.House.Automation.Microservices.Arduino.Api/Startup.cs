@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IoT.House.Automation.Libraries.ConfigLoader.Abstractions;
+using IoT.House.Automation.Libraries.Database.SqlServer.Config;
 using IoT.House.Automation.Libraries.Mapper;
 using IoT.House.Automation.Libraries.Mapper.Abstractions;
 using IoT.House.Automation.Microservices.Arduino.Application.Converters;
@@ -11,8 +13,10 @@ using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Event
 using IoT.House.Automation.Microservices.Arduino.Application.Services;
 using IoT.House.Automation.Microservices.Arduino.Domain.Interfaces;
 using IoT.House.Automation.Microservices.Arduino.Infra.Mongo;
+using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Config;
 using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Connection;
 using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus;
+using IoT.House.Automation.Microservices.Arduino.Infra.SqlServer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +51,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
             ConfigureApplicationServices(services);
             ConfigureMongoDbServices(services);
             ConfigureMessageBroker(services);
+            ConfigureSqlServerServices(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -113,12 +118,22 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
                 ConventionRegistry.Register("My Solution Conventions", pack, t => true);
                 return client;
             });
+
+            services.AddSingleton<MongoConfig>();
         }
 
         private void ConfigureMessageBroker(IServiceCollection services)
         {
-            services.AddSingleton(p => new PersisterConnection(new ConnectionFactory { HostName = "localhost" }));
+            services.AddSingleton<RabbitMQConfig>();
+            services.AddSingleton<PersisterConnection>();
             services.AddSingleton<IEventBus, RabbitMQEventBus>();
+        }
+
+        private void ConfigureSqlServerServices(IServiceCollection services)
+        {
+            services.AddSingleton<ISqlServerConfiguration>(p =>
+                new SqlServerConfiguration(Configuration.GetConnectionString("ArduinoSqlDatabase")));
+            services.AddSingleton<IConfigLoaderRepository, ConfigLoaderRepository>();
         }
     }
 }

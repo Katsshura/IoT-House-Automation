@@ -14,12 +14,12 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.Mongo
         private readonly IMongoCollection<ArduinoInfo> _collection;
         private readonly IEventBus _eventBus;
 
-        public ArduinoRepository(IMongoClient client, IEventBus eventBus)
+        public ArduinoRepository(IMongoClient client, IEventBus eventBus, MongoConfig config)
         {
             _eventBus = eventBus;
 
-            var database = client.GetDatabase("arduino");
-            _collection = database.GetCollection<ArduinoInfo>("arduinos");
+            var database = client.GetDatabase(config.Database);
+            _collection = database.GetCollection<ArduinoInfo>(config.Collection);
         }
 
         public void Register(ArduinoInfo arduino)

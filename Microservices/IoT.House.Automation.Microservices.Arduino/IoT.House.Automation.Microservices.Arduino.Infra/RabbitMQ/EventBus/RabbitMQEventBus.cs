@@ -17,20 +17,17 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
 {
     public class RabbitMQEventBus : IEventBus, IDisposable
     {
-        public string Exchange { get; }
-
         private readonly IServiceProvider _provider;
         private readonly PersisterConnection _connection;
         private readonly SubscriptionManager _subscriptionManager;
         private readonly IModel _consumerChannel;
 
-        public RabbitMQEventBus(IServiceProvider provider, PersisterConnection connection, string exchange = "DefaultExchange")
+        public RabbitMQEventBus(IServiceProvider provider, PersisterConnection connection)
         {
             IfHasNullThrowException(provider, connection);
 
             _provider = provider;
             _connection = connection;
-            Exchange = exchange;
 
             _subscriptionManager = new SubscriptionManager();
             _subscriptionManager.OnEventRemoved += OnSubscriptionManagerEventRemoved;
@@ -48,7 +45,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
 
                 channel.QueueBind(
                     queue: eventName,
-                    exchange: Exchange,
+                    exchange: _connection.Config.Exchange,
                     routingKey: eventName
                 );
 
@@ -62,7 +59,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
             {
                 channel.QueueUnbind(
                     queue: eventName,
-                    exchange: Exchange,
+                    exchange: _connection.Config.Exchange,
                     routingKey: eventName
                 );
 
@@ -85,8 +82,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
                 var eventName = @event.GetType()
                     .Name;
 
-                channel.ExchangeDeclare(exchange: Exchange,
-                    type: "direct");
+                channel.ExchangeDeclare(exchange: _connection.Config.Exchange, type: _connection.Config.ExchangeType);
 
                 var settings = NewtonsoftJsonUtil.UseCustomNewtonsoftSettings();
 
@@ -95,7 +91,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
 
                 policy.Execute(() =>
                 {
-                    channel.BasicPublish(exchange: Exchange,
+                    channel.BasicPublish(exchange: _connection.Config.Exchange,
                         routingKey: eventName,
                         basicProperties: null,
                         body: body);
@@ -117,7 +113,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
         {
 
             var channel = _connection.CreateModel();
-            channel.ExchangeDeclare(exchange: Exchange, type: "direct");
+            channel.ExchangeDeclare(exchange: _connection.Config.Exchange, type: _connection.Config.ExchangeType);
             return channel;
         }
 
