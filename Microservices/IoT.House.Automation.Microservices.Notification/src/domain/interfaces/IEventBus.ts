@@ -3,6 +3,6 @@ import { IEventHandler } from "./IEventHandler";
 
 export interface IEventBus {
     publish(event : Event) : void;
-    subscribe<TEvent extends Event, TEventHandler extends IEventHandler<TEvent>>() : void;
-    unsubscribe<TEvent extends Event, TEventHandler extends IEventHandler<TEvent>>() : void;
+    subscribe<TEventHandler extends IEventHandler<Event>>(event: string, eventHandler: TEventHandler) : void;
+    unsubscribe(event: string) : void;
 }
