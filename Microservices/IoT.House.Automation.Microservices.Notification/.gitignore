@@ -6,3 +6,4 @@ npm-debug.log
 /templates
 /.vscode
 /build
+/src/config/files/firebase-adminsdk.json
