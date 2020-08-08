@@ -1,7 +1,6 @@
 import { connect, Connection } from "amqplib";
 import { rabbitConfig } from "../../config/rabbitmq";
 import { injectable } from "inversify";
-// import { Connection } from "amqplib/callback_api";
 
 @injectable()
 export class RabbitMqConnection {
