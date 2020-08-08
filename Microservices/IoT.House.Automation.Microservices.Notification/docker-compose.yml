@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  notification:
+    image: katsshura/iot-house-automation-notification
+    build:
+        context: .
+        dockerfile: dockerfile
+    tty: true
