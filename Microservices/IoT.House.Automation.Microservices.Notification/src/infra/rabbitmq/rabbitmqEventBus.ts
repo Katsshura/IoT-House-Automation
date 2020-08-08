@@ -60,7 +60,7 @@ export class RabbitMqEventBus implements IEventBus {
 
         var eventName = (message.fields.routingKey || "");
         var content = this.getJsonString((message.content || Buffer.from("")));
-        var parsed = JSON.parse(content) as Event;
+        var parsed = JSON.parse(JSON.parse(content)) as Event;
 
         if(!this._subscriptionManager.hasSubscriptionForEvent(eventName)) { return; }
 

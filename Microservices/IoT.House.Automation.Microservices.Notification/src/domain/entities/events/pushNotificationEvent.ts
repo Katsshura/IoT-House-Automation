@@ -1,8 +1,9 @@
 import { Event } from "./event";
+import { PushNotification } from "../models/pushNotification";
 
 export class PushNotificationEvent extends Event {
     
-    public constructor(private _message: string) {
+    public constructor(private _notification: PushNotification) {
         super();
     }
 
@@ -10,7 +11,7 @@ export class PushNotificationEvent extends Event {
         return "PushNotificationEvent";
     }
 
-    public getMessage() : string {
-        return this._message;
+    get notification() {
+        return this._notification;
     }
 }
