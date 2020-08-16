@@ -1,10 +1,10 @@
-package iot.house.automation.microservices.mobile;
+package iot.house.automation.microservices.mobile.sync;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MobileApplicationTests {
+class SyncApplicationTests {
 
     @Test
     void contextLoads() {
