@@ -13,6 +13,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Application.Util
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new IPAddressConverter());
             settings.Converters.Add(new IPEndPointConverter());
+            settings.ContractResolver = new LowerCaseContractResolver();
             return settings;
         }
     }
