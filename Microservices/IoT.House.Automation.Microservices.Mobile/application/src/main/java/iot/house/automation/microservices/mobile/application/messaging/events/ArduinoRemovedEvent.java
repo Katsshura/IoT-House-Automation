@@ -6,10 +6,10 @@ import java.util.UUID;
 
 @Getter
 public class ArduinoRemovedEvent extends BaseEvent {
-    private UUID arduinoUniqueIdentifier;
+    private UUID arduinoIdentifier;
 
-    public ArduinoRemovedEvent(UUID arduinoUniqueIdentifier) {
-        this.arduinoUniqueIdentifier = arduinoUniqueIdentifier;
+    public ArduinoRemovedEvent(UUID arduinoIdentifier) {
+        this.arduinoIdentifier = arduinoIdentifier;
     }
 
     @Override
