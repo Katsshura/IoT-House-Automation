@@ -1,2 +1,15 @@
-package iot.house.automation.microservices.mobile.domain.models.arduino.events;public class Event {
+package iot.house.automation.microservices.mobile.domain.models.arduino.events;
+
+import lombok.Getter;
+
+@Getter
+public class Event {
+    private String name;
+    private String description;
+    private String expectedInputType;
+    private String type;
+
+    public Event() {
+        type = this.getClass().getSimpleName();
+    }
 }
