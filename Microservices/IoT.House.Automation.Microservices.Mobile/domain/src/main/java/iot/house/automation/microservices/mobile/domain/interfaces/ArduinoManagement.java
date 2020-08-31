@@ -9,5 +9,5 @@ public interface ArduinoManagement {
     void register(Arduino arduino);
     Arduino getArduino(UUID uniqueIdentifier);
     List<Arduino> getArduinos();
-    boolean remove(UUID uniqueIdentifier);
+    void delete(UUID uniqueIdentifier);
 }

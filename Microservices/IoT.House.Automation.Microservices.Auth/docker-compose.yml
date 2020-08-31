@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  arduino-api:
+    image: katsshura/iot-house-automation-auth-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+        - "9001:80"

@@ -9,8 +9,8 @@ import java.util.UUID;
 
 @Getter
 public abstract class BaseEvent {
-    private UUID id;
-    private Date createdAt;
+    private final UUID id;
+    private final Date createdAt;
 
     public abstract String getType();
 
