@@ -45,7 +45,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
 
                 channel.QueueBind(
                     queue: eventName,
-                    exchange: _connection.Config.Exchange,
+                    exchange: _connection.Config.ConsumerExchange,
                     routingKey: eventName
                 );
 
@@ -59,7 +59,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
             {
                 channel.QueueUnbind(
                     queue: eventName,
-                    exchange: _connection.Config.Exchange,
+                    exchange: _connection.Config.ConsumerExchange,
                     routingKey: eventName
                 );
 
@@ -82,7 +82,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
                 var eventName = @event.GetType()
                     .Name;
 
-                channel.ExchangeDeclare(exchange: _connection.Config.Exchange, type: _connection.Config.ExchangeType);
+                channel.ExchangeDeclare(exchange: _connection.Config.Exchange, type: _connection.Config.ExchangeType, true);
 
                 var settings = NewtonsoftJsonUtil.UseCustomNewtonsoftSettings();
 
@@ -113,7 +113,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.EventBus
         {
 
             var channel = _connection.CreateModel();
-            channel.ExchangeDeclare(exchange: _connection.Config.Exchange, type: _connection.Config.ExchangeType);
+            channel.ExchangeDeclare(exchange: _connection.Config.Exchange, type: _connection.Config.ExchangeType, true);
             return channel;
         }
 

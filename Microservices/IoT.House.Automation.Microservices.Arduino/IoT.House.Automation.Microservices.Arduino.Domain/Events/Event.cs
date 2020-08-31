@@ -10,7 +10,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Domain.Events
         public string Description { get; set; }
         public EventInputType ExpectedInputType { get; set; }
 
-        public virtual Type Type => this.GetType();
+        public virtual string Type => this.GetType().Name;
 
 
         public virtual bool IsValid()
