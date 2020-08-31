@@ -21,10 +21,10 @@ public class PersistedConnection {
     private final ConnectionFactory connectionFactory;
     private final int retryCount;
     private Connection connection;
-    private Object syncRoot;
+    private final Object syncRoot;
 
     @Getter
-    private RabbitMQConfig config;
+    private final RabbitMQConfig config;
 
     @Autowired
     public PersistedConnection(RabbitMQConfig config) {

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.PortUnreachableException;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.TimeoutException;
 
@@ -128,7 +129,7 @@ public class RabbitMQEventBus implements EventBus {
                     {
                         var routingKey = envelope.getRoutingKey();
                         var deliveryTag = envelope.getDeliveryTag();
-                        var message = new String(body, "UTF-8");
+                        var message = new String(body, StandardCharsets.UTF_8);
 
                         handleEvent(routingKey, message, deliveryTag, channel);
                         //channel.basicAck(deliveryTag, false);
