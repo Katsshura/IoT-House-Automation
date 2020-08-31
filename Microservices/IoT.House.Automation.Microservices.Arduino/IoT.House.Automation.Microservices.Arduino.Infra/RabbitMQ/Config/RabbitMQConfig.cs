@@ -9,6 +9,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Config
     {
         public string Uri { get; set; }
         public string Exchange { get; set; }
+        public string ConsumerExchange { get; set; }
         public string ExchangeType { get; set; }
 
         protected override string ProjectName => GetProjectName();

@@ -7,7 +7,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Domain.Events
         public object MinValue { get; set; }
         public object MaxValue { get; set; }
 
-        public override Type Type => this.GetType();
+        public override string Type => this.GetType().Name;
 
         public override bool IsValid()
         {
