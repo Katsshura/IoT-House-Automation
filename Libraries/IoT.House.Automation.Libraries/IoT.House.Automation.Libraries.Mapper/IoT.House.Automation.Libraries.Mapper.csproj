@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Product>IoT.House.Automation</Product>
+    <Authors>Katsshura</Authors>
+    <Company />
+    <Description>Mapper Library created for IoT.House.Automation project.
+
+Full Project Avaliable on github</Description>
+    <PackageProjectUrl>https://github.com/Katsshura/IoT-House-Automation</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Katsshura/IoT-House-Automation</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <Version>1.0.3</Version>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,9 @@
+/node_modules
+/*.env
+/*-lock.json
+npm-debug.log
+.DS_Store
+/templates
+/.vscode
+/build
+/src/config/files/firebase-adminsdk.json
