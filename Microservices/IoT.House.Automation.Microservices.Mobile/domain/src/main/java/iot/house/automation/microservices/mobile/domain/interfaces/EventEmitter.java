@@ -1,5 +1,7 @@
 package iot.house.automation.microservices.mobile.domain.interfaces;
 
-public interface EventEmitter {
+import java.util.UUID;
 
+public interface EventEmitter {
+    void emit(UUID arduinoIdentifier, String eventName, Object eventValue);
 }
