@@ -24,5 +24,24 @@ namespace IoT.House.Automation.Microservices.Arduino.Api.ViewModel
         public string EventType { get; set; }
 
         public Dictionary<string, dynamic> Parameters { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is EventViewModel compareObj)) return false;
+
+            return Name.Equals(compareObj.Name);
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = 13;
+            hash *= 10 + Name.GetHashCode();
+            return hash;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
