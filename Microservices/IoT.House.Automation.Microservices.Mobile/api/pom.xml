@@ -46,6 +46,24 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+        <dependency>
+            <groupId>IoT.House.Automation.Microservices</groupId>
+            <artifactId>domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+			<groupId>IoT.House.Automation.Microservices</groupId>
+			<artifactId>application</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>IoT.House.Automation.Microservices</groupId>
+			<artifactId>infrastructure</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
