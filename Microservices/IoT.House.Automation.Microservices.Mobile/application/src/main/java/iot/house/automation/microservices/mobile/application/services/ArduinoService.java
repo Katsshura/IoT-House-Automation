@@ -1,6 +1,8 @@
 package iot.house.automation.microservices.mobile.application.services;
 
+import iot.house.automation.microservices.mobile.application.interfaces.EventBus;
 import iot.house.automation.microservices.mobile.application.interfaces.NoSqlDatabase;
+import iot.house.automation.microservices.mobile.application.messaging.events.ArduinoRemovedEvent;
 import iot.house.automation.microservices.mobile.domain.interfaces.ArduinoManagement;
 import iot.house.automation.microservices.mobile.domain.models.arduino.Arduino;
 import org.springframework.stereotype.Component;
@@ -12,9 +14,11 @@ import java.util.UUID;
 public class ArduinoService implements ArduinoManagement {
 
     private final NoSqlDatabase<Arduino, UUID> repository;
+    private final EventBus bus;
 
-    public ArduinoService(NoSqlDatabase<Arduino, UUID> repository) {
+    public ArduinoService(NoSqlDatabase<Arduino, UUID> repository, EventBus bus) {
         this.repository = repository;
+        this.bus = bus;
     }
 
     @Override
@@ -43,6 +47,7 @@ public class ArduinoService implements ArduinoManagement {
     @Override
     public void delete(UUID uniqueIdentifier) {
         repository.delete(uniqueIdentifier);
+        bus.publish(new ArduinoRemovedEvent(uniqueIdentifier));
     }
 
     private boolean isAlreadyRegistered(UUID uuid) {

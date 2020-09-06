@@ -7,7 +7,7 @@ public class Event {
     private String name;
     private String description;
     private String expectedInputType;
-    private final String type;
+    private String type;
 
     public Event() {
         type = this.getClass().getSimpleName();
