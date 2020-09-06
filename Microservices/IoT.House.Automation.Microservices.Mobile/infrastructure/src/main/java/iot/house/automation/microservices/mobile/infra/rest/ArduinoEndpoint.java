@@ -4,19 +4,24 @@ import com.google.gson.Gson;
 import iot.house.automation.microservices.mobile.domain.interfaces.EventEmitter;
 import iot.house.automation.microservices.mobile.infra.rest.dtos.ArduinoEvent;
 import lombok.SneakyThrows;
+import net.jodah.failsafe.Failsafe;
+import net.jodah.failsafe.RetryPolicy;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.UUID;
 
 @Component
 public class ArduinoEndpoint implements EventEmitter {
 
-    private final String base_url = "http://localhost:51565/api/mobile";
+    private final String base_url;
     private final Gson gson;
 
-    public ArduinoEndpoint() {
+    public ArduinoEndpoint(@Value("${spring.arduino.endpoint}") String base_url) {
+        this.base_url = base_url;
         gson = new Gson();
     }
 
@@ -28,7 +33,12 @@ public class ArduinoEndpoint implements EventEmitter {
         var jsonBody = getJsonBody(body);
         var request = getPostConnection(url, jsonBody);
 
-        request.execute();
+        var policy = new RetryPolicy<>()
+                .handle(Exception.class)
+                .withMaxRetries(5)
+                .withDelay(Duration.ofMinutes(1));
+
+        Failsafe.with(policy).run(() -> request.execute());
     }
 
     private String getJsonBody(Object body) {
