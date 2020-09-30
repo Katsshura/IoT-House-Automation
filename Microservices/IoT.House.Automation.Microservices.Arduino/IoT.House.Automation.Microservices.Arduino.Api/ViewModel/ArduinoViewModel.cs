@@ -18,6 +18,6 @@ namespace IoT.House.Automation.Microservices.Arduino.Api.ViewModel
         [Required]
         public int Port { get; set; }
         [Required]
-        public IEnumerable<EventViewModel> Events { get; set; }
+        public ISet<EventViewModel> Events { get; set; }
     }
 }
