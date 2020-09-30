@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using IoT.House.Automation.Libraries.ConfigLoader.Abstractions;
 using IoT.House.Automation.Libraries.Database.SqlServer.Config;
@@ -12,6 +13,7 @@ using IoT.House.Automation.Microservices.Arduino.Application.Job;
 using IoT.House.Automation.Microservices.Arduino.Application.MessageBroker.Events;
 using IoT.House.Automation.Microservices.Arduino.Application.Services;
 using IoT.House.Automation.Microservices.Arduino.Domain.Interfaces;
+using IoT.House.Automation.Microservices.Arduino.Infra.DeviceEndpoint;
 using IoT.House.Automation.Microservices.Arduino.Infra.Mongo;
 using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Config;
 using IoT.House.Automation.Microservices.Arduino.Infra.RabbitMQ.Connection;
@@ -96,6 +98,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
             services.AddSingleton<IHeartbeat, HeartbeatService>();
             services.AddSingleton<HeartbeatJobFactory>();
             services.AddSingleton<HeartbeatJob>();
+            services.AddSingleton(provider => new HttpClient());
         }
 
         private void ConfigureDomainServices(IServiceCollection services)
@@ -107,6 +110,7 @@ namespace IoT.House.Automation.Microservices.Arduino.Api
         private void ConfigureExternalServices(IServiceCollection services)
         {
             services.AddSingleton<IMapper, MapperService>();
+            services.AddSingleton<IEventTrigger, ArduinoDeviceEndpoint>();
         }
 
         private void ConfigureMongoDbServices(IServiceCollection services)
