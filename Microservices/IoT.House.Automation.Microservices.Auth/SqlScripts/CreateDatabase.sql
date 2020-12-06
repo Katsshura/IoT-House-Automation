@@ -1,3 +1,10 @@
+IF(DB_ID('Authorization') IS NULL)
+BEGIN
+	CREATE DATABASE [Authorization]
+END
+
+Use [Authorization]
+
 IF (NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'Auth')) 
 BEGIN
     EXEC ('CREATE SCHEMA [Auth] AUTHORIZATION [dbo]')
