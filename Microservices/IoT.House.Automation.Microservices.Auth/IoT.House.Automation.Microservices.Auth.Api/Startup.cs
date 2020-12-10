@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using IoT.House.Automation.Libraries.ConfigLoader.Abstractions;
@@ -65,6 +66,7 @@ namespace IoT.House.Automation.Microservices.Auth.Api
         {
             services.AddScoped<JwtConfig>();
             services.AddScoped<IJwt, JwtService>();
+            services.AddScoped<JwtSecurityTokenHandler>();
         }
 
         private void ConfigureDatabaseServices(IServiceCollection services)
