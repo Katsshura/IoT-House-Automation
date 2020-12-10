@@ -12,10 +12,10 @@ namespace IoT.House.Automation.Microservices.Auth.Application.Services.Jwt
         private readonly JwtConfig _jwtConfig;
         private readonly JwtSecurityTokenHandler _tokenHandler;
 
-        public JwtService(JwtConfig jwtConfig)
+        public JwtService(JwtConfig jwtConfig, JwtSecurityTokenHandler tokenHandler)
         {
             _jwtConfig = jwtConfig;
-            _tokenHandler = new JwtSecurityTokenHandler();
+            _tokenHandler = tokenHandler;
         }
 
         public string CreateToken(string username)
